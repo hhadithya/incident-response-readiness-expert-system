@@ -143,7 +143,7 @@ Facts are phrased so `yes` means the practice is present, and every rule fires o
 
 ## Group E. Derived rules
 
-These read facts produced by the rules above rather than answers from the user, so the system performs multi step inference and goal directed queries have something to prove. NIST states that recommendations made at Function or Category level also apply to their component elements (PDF p. 18), which is the basis for grounding them on higher level statements.
+These read findings asserted by the rules above rather than answers from the user, so a second round of forward chaining follows the first. NIST states that recommendations made at Function or Category level also apply to their component elements (PDF p. 18), which is the basis for grounding them on higher level statements.
 
 **R24. Continuous monitoring coverage is incomplete**
 *Source:* DE.CM.R1, Table 3, PDF p. 31 (doc p. 23), High. Continuous monitoring should involve these asset types at all times: networks and network services; computing hardware and software, runtime environments and their data; the physical environment; personnel activity and technology usage; and external service provider activities.
