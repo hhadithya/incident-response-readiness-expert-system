@@ -1,2 +1,0 @@
-# The expert system uses only the Python 3 standard library.
-# No third party packages are required to run it or its test cases.
