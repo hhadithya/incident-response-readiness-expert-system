@@ -67,13 +67,7 @@ Collected from the user. One per rule, in the order the questionnaire asks them.
 
 ## Derived facts
 
-Produced by rules, never asked. Each primitive rule produces one gap fact; the three derived rules produce one state fact each.
-
-### Gap facts
-
-`gap_ir_policy_missing` (R01), `gap_ir_roles_undocumented` (R02), `gap_ir_authority_not_designated` (R03), `gap_ir_plan_missing` (R04), `gap_ir_plan_not_maintained` (R05), `gap_no_role_based_ir_training` (R06), `gap_third_parties_excluded_from_ir` (R07), `gap_no_log_availability` (R08), `gap_no_network_monitoring` (R09), `gap_no_endpoint_monitoring` (R10), `gap_no_event_correlation` (R11), `gap_alerts_not_reaching_responders` (R12), `gap_no_incident_declaration_criteria` (R13), `gap_no_incident_triage` (R14), `gap_no_incident_prioritization` (R15), `gap_no_incident_status_tracking` (R16), `gap_no_notification_procedures` (R17), `gap_no_containment_eradication_criteria` (R18), `gap_no_tested_backups` (R19), `gap_no_recovery_initiation_criteria` (R20), `gap_no_backup_integrity_verification` (R21), `gap_no_restored_asset_verification` (R22), `gap_no_root_cause_analysis` (R23), `gap_no_after_action_report` (R24)
-
-### State facts
+Produced by rules, never asked. Each of R01 to R24 produces one gap fact, named in the rule mapping. The three derived rules each produce a state fact:
 
 | Fact | Produced by | From |
 |---|---|---|
@@ -85,13 +79,6 @@ Produced by rules, never asked. Each primitive rule produces one gap fact; the t
 
 24 questions, 24 primitive facts, 27 derived facts.
 
-Rules R01 to R24 each read exactly one primitive fact, so every rule has the input it needs and every question serves a rule. Rules R25 to R27 read only gap facts produced by R01 to R24. No fact is collected twice and no fact is unused.
+R01 to R24 each read one primitive fact, so every rule has its input and every question serves a rule. R25 to R27 read only gap facts. Nothing is asked twice and nothing is collected unused.
 
-## Question wording
-
-Questions are written for someone who manages IT or security in the organization, not for a specialist in the source document. Each asks about one practice, avoids the CSF terminology the rule is derived from, and can be answered without reading NIST SP 800-61r3.
-
-Two are worth a second look before the interface is built:
-
-- **F10** covers five NIST recommendations in one question. Asking about all five separately would be more precise but harder to answer.
-- **F18** combines containment and eradication. NIST treats them as separate Subcategories but describes one set of criteria covering both.
+Questions are written for someone who manages IT or security, not for a specialist in the source document. Each asks about one practice and avoids the CSF terminology behind it. Two are compromises: F10 covers five NIST recommendations in one question, and F18 combines containment and eradication, which NIST treats as separate Subcategories under one set of criteria.
