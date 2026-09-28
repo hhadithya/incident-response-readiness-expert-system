@@ -1,7 +1,8 @@
 ;;; Reporting and explanation.
 ;;;
-;;; Everything shown here is read from the finding facts the rules asserted.
-;;; Nothing is recomputed, so what the user sees is what the rule concluded.
+;;; Everything shown here is read from the finding facts the rules asserted
+;;; and the answer facts they matched on. Nothing is recomputed, so what the
+;;; user reads is what the rule actually concluded.
 
 (deffunction rule-line (?ch)
    (bind ?i 0)
@@ -54,6 +55,37 @@
                   (fact-slot-value ?f source) ", "
                   (fact-slot-value ?f page) crlf))))))
 
+;;; A rule that read an answer explains itself with the question that was put
+;;; to the user and the answer given. A rule that read other findings explains
+;;; itself with those findings, so the chain back to the user's answers stays
+;;; visible.
+
+(deffunction explain-answer (?name)
+   (bind ?q (find-fact ((?q question)) (eq ?q:name ?name)))
+   (bind ?a (find-fact ((?a answer)) (eq ?a:name ?name)))
+   (if (> (length$ ?q) 0) then
+      (printout t "      Question " (fact-slot-value (nth$ 1 ?q) id) ": "
+                  (fact-slot-value (nth$ 1 ?q) text) crlf))
+   (if (> (length$ ?a) 0) then
+      (printout t "      You answered: " (fact-slot-value (nth$ 1 ?a) value) crlf)
+      else
+      (printout t "      Fact: " ?name crlf)))
+
+(deffunction explain-supports (?conclusions)
+   (foreach ?c ?conclusions
+      (bind ?found (find-fact ((?f finding)) (eq ?f:conclusion ?c)))
+      (if (> (length$ ?found) 0) then
+         (bind ?s (nth$ 1 ?found))
+         (printout t "      [" (fact-slot-value ?s rule-id) "] "
+                     (fact-slot-value ?s title) crlf))))
+
+(deffunction explain-trigger (?f)
+   (if (neq (fact-slot-value ?f asked) nil) then
+      (explain-answer (fact-slot-value ?f asked))
+      else
+      (printout t "      These findings, already established by other rules:" crlf)
+      (explain-supports (fact-slot-value ?f depends-on))))
+
 (deffunction explain-fact (?f)
    (printout t crlf)
    (rule-line "=")
@@ -61,9 +93,9 @@
       (fact-slot-value ?f title) crlf
       "  Area: " (area-label (fact-slot-value ?f area)) crlf)
    (rule-line "=")
+   (printout t crlf "  Triggered because" crlf)
+   (explain-trigger ?f)
    (printout t crlf
-      "  Triggered because" crlf
-      "      " (fact-slot-value ?f trigger) crlf crlf
       "  Concluded" crlf
       "      " (fact-slot-value ?f conclusion) crlf crlf
       "  Finding" crlf
