@@ -110,7 +110,7 @@ Facts are phrased so `yes` means the practice is present, and every rule fires o
 *Recommendation:* Establish coordination procedures stating what must be reported, to whom and when, aligned with applicable legal and regulatory requirements.
 
 **R18. Containment and eradication criteria are in place**
-*Source:* RS.MI.N1, Table 3, PDF p. 40 (doc p. 32), High. Activities are performed to prevent expansion of an event and mitigate its effects. Selecting containment and eradication actions is easier and faster where the organization has criteria and procedures in place, accounting for incident type and the intended duration of the measure.
+*Source:* RS.MI-01 and RS.MI-02, with RS.MI.N1, Table 3, PDF pp. 40 to 41 (doc pp. 32 to 33), High. Incidents are contained, and incidents are eradicated. Containment prevents the expansion of an incident, and most incidents require some form of it; eradication eliminates persistence mechanisms and entry points. Selecting these actions is easier and faster where the organization has criteria and procedures in place, accounting for incident type and the intended duration of the measure.
 *Rule:* if `containment_eradication_criteria` = no, then `gap_no_containment_eradication_criteria`
 *Recommendation:* Define criteria and procedures for selecting containment and eradication actions, accounting for incident type and how long each measure is meant to last.
 
@@ -181,7 +181,7 @@ Most rules restate a NIST recommendation directly as a presence test. These need
 - **R07** accepts `not_applicable`, since an organization using no third parties cannot answer yes or no.
 - **R08** is grouped with detection although NIST places PR.PS-04 in the preparation table, because the detection rules depend on it.
 - **R10** turns five NIST recommendations into one fact, since a respondent could not answer them separately. All five stay in the recommendation text.
-- **R18** is framed around criteria rather than whether incidents get contained, since readiness is what the system assesses. NIST phrases this note conditionally rather than as a recommendation, making it the weakest grounding in the set.
+- **R18** is framed around criteria rather than whether incidents get contained, since readiness is what the system assesses. It rests on the two Subcategory outcomes, which are normative, with the Category note explaining why criteria matter.
 - **R20** sits with recovery although NIST places RS.MA-05 in Respond, because it governs when recovery starts.
 - **R21 and R22** are distinct: one verifies the source of a restoration, the other its result.
 - **R25 to R27** use disjunctions rather than counts, because the source requires all of the listed elements rather than most of them.
@@ -202,4 +202,5 @@ Most rules restate a NIST recommendation directly as a presence test. These need
 
 - Continuous monitoring is assessed across three of the five asset classes DE.CM.R1 lists. The physical environment and external service provider activities are not assessed.
 - The conclusions of R25 to R27 use the words incomplete and inadequate. The claims underneath are source backed; the wording is this project's.
+- Every citation and priority in this file was checked line by line against the text of the source PDF.
 - Not used: all Low rated elements; risk assessment (ID.RA), which NIST places outside this Profile's scope; asset management (ID.AM); threat intelligence (ID.RA-02); and the Protect Subcategories carrying only the generic note. Items marked `C` are not used, since NIST presents them as things to consider rather than to do.
