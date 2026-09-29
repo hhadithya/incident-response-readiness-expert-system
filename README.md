@@ -31,6 +31,17 @@ A copy is kept at [`references/NIST.SP.800-61r3.pdf`](references/NIST.SP.800-61r
 
 No domain expert was interviewed. Each of the 26 rules is traced to a specific CSF element, item identifier and page in that document. The trace is recorded in [`docs/rule_source_mapping.md`](docs/rule_source_mapping.md) and carried inside the rule itself, so the running system can cite it.
 
+## Technology stack
+
+| Layer | Technology |
+|---|---|
+| Expert system shell | CLIPS 6.4.2 |
+| Inference | CLIPS forward chaining |
+| Knowledge base | CLIPS production rules, `src/rules.clp` |
+| Desktop interface | Python 3, Tkinter |
+| Integration | CLIPSpy |
+| Knowledge source | NIST SP 800-61 Revision 3 |
+
 ## Where the reasoning happens
 
 **CLIPS holds the knowledge and does the inference.** The rules live in `src/rules.clp` as CLIPS production rules, and CLIPS' own forward chaining engine decides what fires.
@@ -66,18 +77,29 @@ The desktop application is written in Python, but **Python performs no reasoning
 
 The terminal interface needs CLIPS alone. The desktop interface needs Python, clipspy and Tkinter.
 
-## Running the desktop application
+## Installation
 
 ```bash
+git clone https://github.com/hhadithya/incident-response-readiness-expert-system.git
+cd incident-response-readiness-expert-system
 pip install -r requirements.txt
+```
+
+For the CLIPS terminal interface, install CLIPS 6.4.2 from https://www.clipsrules.net as well. The desktop application does not need it, because clipspy bundles the engine.
+
+## Running the desktop application (recommended)
+
+```bash
 python app/desktop_app.py
 ```
+
+On Windows, use `py` in place of `python` if `python` opens the Microsoft Store.
 
 Answer each question Yes, No or Unknown, then click **Run Assessment**. Findings appear grouped by area, each with its rule, recommendation and source. **View Explanation** on any finding shows what triggered it.
 
 Leaving a question blank is allowed. You are asked to confirm, and it is recorded as Unknown, never as No.
 
-## Running in the CLIPS terminal
+## Running in the CLIPS terminal (alternative)
 
 Open CLIPS with the repository root as the working directory, then:
 
@@ -102,6 +124,28 @@ After the questionnaire, the findings are printed. Then:
 (explain R18)      the reasoning behind one finding
 (explain-all)      every finding in full
 ```
+
+## How findings are shown
+
+Each finding names the rule that produced it, what that rule concluded, a recommendation, and the NIST location the rule came from:
+
+```
+  [R18] Backups   (NIST priority: High)
+      Finding        : Backups of data are not created, protected, maintained and tested.
+      Recommendation : Create, protect, maintain and test backups of data.
+      Source         : NIST SP 800-61r3, PR.DS-11, PDF p. 30 (doc p. 22)
+```
+
+Asking for the explanation adds what made the rule fire. For a rule that read an answer, that is the question and the answer given. For R24, R25 and R26, which match on other rules' findings, it is those findings:
+
+```
+  Triggered because
+      These findings, already established by other rules:
+      [R18] Backups
+      [R20] Restoration asset integrity
+```
+
+The NIST priority is the source's own judgement of how central that outcome is to incident response. It is not a severity rating for your organization.
 
 ## How answers are treated
 

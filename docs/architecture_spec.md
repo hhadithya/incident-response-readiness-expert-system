@@ -42,13 +42,13 @@ That container is the single most important thing in the diagram. It shows the r
 | 3 Adapter | 4 Working memory | `asserts (answer (name ...) (value ...))` | down |
 | 4 Working memory | 5 Engine | `facts` | down |
 | 6 Knowledge base | 5 Engine | `rule conditions` | left, into the engine |
-| 10 Source | 6 Knowledge base | `each rule cites an element and page` | left |
+| 10 Source | 6 Knowledge base | `knowledge acquisition: each rule cites an element and page` | left |
 | 5 Engine | 7 Findings | `matching rules fire and assert` | down |
 | 7 Findings | 5 Engine | `findings satisfy R24, R25, R26` | curved, back up the right side |
 | 7 Findings | 3 Adapter | `reads finding facts` | up the left side |
 | 3 Adapter | 8 Results view | `findings as Python data` | down |
 | 8 Results view | 1 User | `findings, recommendations, sources` | curved, back up to the user |
-| 9 CLI | 4 Working memory | `same facts, same rules` | right, dashed |
+| 9 CLI | 4 Working memory | `same knowledge base, same inference` | right, dashed |
 
 ## The two arrows that carry the argument
 
