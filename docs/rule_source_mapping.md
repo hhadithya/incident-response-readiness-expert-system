@@ -185,8 +185,8 @@ Most rules restate a NIST recommendation directly as a presence test. These need
 | Reading derived facts | 3 |
 | Primitive facts | 23 |
 | Derived facts | 26 |
-| From High priority elements | 21 |
-| From Medium priority elements | 5 |
+| From High priority elements | 22 |
+| From Medium priority elements | 4 |
 
 ## Known limits
 
