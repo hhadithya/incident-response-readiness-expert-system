@@ -1,0 +1,7 @@
+# Needed only by the desktop interface in app/. The CLIPS command line
+# system in src/ requires none of this.
+clipspy==1.0.6
+
+# Tkinter is part of the Python standard library on Windows and macOS.
+# On Debian or Ubuntu install it with the system package manager:
+#   sudo apt install python3-tk
