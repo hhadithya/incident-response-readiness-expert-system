@@ -44,11 +44,7 @@ class ExpertSystem:
         self.env.reset()
         if not list(self.env.rules()):
             raise KnowledgeBaseError("the knowledge base loaded but defines no rules")
-
-    def questions(self):
-        """The questionnaire, in the order questions.clp declares it."""
-        self.env.reset()
-        return [
+        self._questions = [
             {
                 "id": _text(f["id"]),
                 "name": _text(f["name"]),
@@ -58,6 +54,22 @@ class ExpertSystem:
             for f in self.env.facts()
             if f.template.name == "question"
         ]
+        if not self._questions:
+            raise KnowledgeBaseError("the knowledge base defines no questions")
+
+    def questions(self):
+        """The questionnaire, in the order questions.clp declares it.
+
+        Read once when the environment loads, so asking for it later does not
+        reset working memory and discard the findings already there.
+        """
+        return list(self._questions)
+
+    def question(self, name):
+        for q in self._questions:
+            if q["name"] == name:
+                return q
+        return None
 
     def assess(self, answers):
         """Assert the answers, run CLIPS, and return the findings it asserted.
@@ -69,12 +81,11 @@ class ExpertSystem:
         if unknown_value:
             raise ValueError(f"answers must be yes, no or unknown: {unknown_value}")
 
-        self.env.reset()
-        asked = {q["name"] for q in self._question_names()}
-        unrecognised = set(answers) - asked
+        unrecognised = set(answers) - {q["name"] for q in self._questions}
         if unrecognised:
             raise ValueError(f"no such question: {sorted(unrecognised)}")
 
+        self.env.reset()
         template = self.env.find_template("answer")
         for name, value in answers.items():
             template.assert_fact(name=clips.Symbol(name), value=clips.Symbol(value))
@@ -89,10 +100,6 @@ class ExpertSystem:
              if f.template.name == "finding"),
             key=lambda f: f["rule_id"],
         )
-
-    def _question_names(self):
-        return [{"name": _text(f["name"])} for f in self.env.facts()
-                if f.template.name == "question"]
 
     def _finding(self, fact):
         asked = _text(fact["asked"])
